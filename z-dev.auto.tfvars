@@ -1,5 +1,5 @@
 name-prefix = "Dev"
-vm-size = "t3.medium"
+vm-size = "t3.small"
 ami-region-1 = "ami-03690dfa5bcede9c7"
 ami-region-2 = "ami-0345f44fe05216fc4"
 

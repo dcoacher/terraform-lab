@@ -82,11 +82,15 @@ resource "aws_route_table" "Oregon-RT" {
   tags = {
     Name = "${var.name-prefix}-RT"
   }
+}
 
-  route {
-    cidr_block = "0.0.0.0/0"
-    gateway_id = aws_internet_gateway.Oregon-IGW.id
-  }
+# Oregon Route
+resource "aws_route" "Oregon-Route" {
+  provider = aws.Oregon
+  route_table_id            = aws_route_table.Oregon-RT.id
+  destination_cidr_block    = "0.0.0.0/0"
+  gateway_id = aws_internet_gateway.Oregon-IGW.id
+  # vpc_peering_connection_id = "pcx-45ff3dc1"
 }
 
 # Oregon Route Table Association for Subnet 1
@@ -101,4 +105,37 @@ resource "aws_route_table_association" "Oregon-RTA-Subnet-2" {
   provider = aws.Oregon
   subnet_id      = aws_subnet.Oregon-Subnet-2.id
   route_table_id = aws_route_table.Oregon-RT.id
+} 
+
+# North Virginia Route Table
+resource "aws_route_table" "North_Virginia-RT" {
+  provider = aws.North_Virginia
+  vpc_id = aws_vpc.North_Virginia-VPC.id
+
+  tags = {
+    Name = "${var.name-prefix}-RT"
+  }
+}
+
+# # North Virginia Route
+# resource "aws_route" "Oregon-Route" {
+#   provider = aws.North_Virginia
+#   route_table_id            = aws_route_table.aws.North_Virginia-RT.id
+#   destination_cidr_block    = "0.0.0.0/0"
+#   gateway_id = aws_internet_gateway.Oregon-IGW.id
+#   # vpc_peering_connection_id = "pcx-45ff3dc1"
+# }
+
+# North Virginia Route Table Association for Subnet 1
+resource "aws_route_table_association" "North_Virginia-RTA-Subnet-1" {
+  provider = aws.North_Virginia
+  subnet_id      = aws_subnet.North_Virginia-Subnet-1.id
+  route_table_id = aws_route_table.North_Virginia-RT.id
+} 
+
+# North Virginia Route Table Association for Subnet 2
+resource "aws_route_table_association" "North_Virginia-RTA-Subnet-2" {
+  provider = aws.North_Virginia
+  subnet_id      = aws_subnet.North_Virginia-Subnet-2.id
+  route_table_id = aws_route_table.North_Virginia-RT.id
 } 

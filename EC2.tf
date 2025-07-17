@@ -19,7 +19,7 @@ resource "aws_instance" "North_Virginia-VMs" {
   instance_type = var.vm-size
   key_name = aws_key_pair.North_VirginiaKey.key_name
   count = 2
-  # vpc_security_group_ids = [aws_security_group.Allow-RDP-HTTP.id]
+  vpc_security_group_ids = [aws_security_group.Allow-RDP-HTTP-from-Oregon.id]
   subnet_id = aws_subnet.North_Virginia-Subnet-1.id
   
   tags = {
